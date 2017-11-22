@@ -2,8 +2,14 @@
 
 ## Works with
 
+Mantis Versions:
 - MantisBT: v2.8.0 or above.
 - MantisHub
+
+Operating Systems (all supported by PowerShell Core):
+- Mac OS X
+- Windows
+- Linux
 
 ## Install PowerShell Core
 
