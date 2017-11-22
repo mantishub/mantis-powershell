@@ -42,3 +42,9 @@ $issue | Add-MantisIssue
 ```
 Get-MantisIssue 1
 ```
+
+### Getting a config option
+
+```
+Get-MantisConfig webmaster_email
+```

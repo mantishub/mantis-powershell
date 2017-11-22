@@ -129,6 +129,29 @@ function Get-MantisUser {
   return $result
 }
 
+<#
+ .Synopsis
+  Get config option value.
+
+ .Description
+  Get config option value.
+
+ .Example
+   Get-MantisConfig webmaster_email
+#>
+function Get-MantisConfig {
+param(
+    [string] $name
+  )
+
+  $instance = getInstance
+  $headers = getCommonHeaders
+
+  $uri = $instance.uri + "config?option[]=" + $name
+  $result = Invoke-RestMethod -Uri $uri -Headers $headers
+  return $result.configs[0];
+}
+
 #
 # Helper Functions
 #
@@ -156,3 +179,4 @@ export-modulemember -function Get-MantisIssue
 export-modulemember -function New-MantisIssue
 export-modulemember -function Add-MantisIssue
 export-modulemember -function Get-MantisUser
+export-modulemember -function Get-MantisConfig
