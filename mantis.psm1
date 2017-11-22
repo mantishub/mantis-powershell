@@ -131,6 +131,27 @@ function Get-MantisUser {
 
 <#
  .Synopsis
+  Get Mantis Version.
+
+ .Description
+  Get Mantis Version.
+
+ .Example
+   Get-MantisVersion
+#>
+function Get-MantisVersion {
+  $instance = getInstance
+  $headers = getCommonHeaders
+
+  $uri = $instance.uri + "users/me"
+
+  $result = Invoke-RestMethod -Uri $uri -Headers $headers -ResponseHeadersVariable 'responseHeaders'
+
+  return $responseHeaders["X-Mantis-Version"]
+}
+
+<#
+ .Synopsis
   Get config option value.
 
  .Description
@@ -180,3 +201,4 @@ export-modulemember -function New-MantisIssue
 export-modulemember -function Add-MantisIssue
 export-modulemember -function Get-MantisUser
 export-modulemember -function Get-MantisConfig
+export-modulemember -function Get-MantisVersion
