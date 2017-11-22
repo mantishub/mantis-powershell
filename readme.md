@@ -52,10 +52,17 @@ $issue.AddCustomField( "The City", "Seattle" )
 $issue | Add-MantisIssue
 ```
 
-### Getting an issue
+### Getting an issue by Id
 
 ```
 Get-MantisIssue 1
+```
+
+## Get issue history by id
+
+```
+$issue = Get-MantisIssue 1
+$issue.history | ForEach-Object -Process { Write-Output $_ }
 ```
 
 ### Getting issues
