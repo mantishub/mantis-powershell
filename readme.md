@@ -23,14 +23,22 @@ Create `~/.mantis.json` with contents like the one below and place the token in 
 }
 ```
 
-## Test the cmdlets
+### Get Logged In User Info
 
-- Get an issue
-```
-Get-MantisIssue 1
-```
-
-- Get user information
 ```
 Get-MantisUser
+```
+
+## Creating an issue
+
+```
+$issue = New-MantisIssue -summary "summmm" -description "desc" -handler "vboctor" -reporter "vboctor" -project "mantisbt" -category "ui" 
+$issue.AddCustomField( "The City", "Seattle" )
+$issue | Add-MantisIssue
+```
+
+### Getting an issue
+
+```
+Get-MantisIssue 1
 ```
