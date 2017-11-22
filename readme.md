@@ -89,6 +89,23 @@ Get a specific page and page size:
 Get-MantisIssue -page 5 -pageSize 50
 ```
 
+### Deleting an issue
+
+Delete an issue via its id
+```
+Remove-MantisIssue 1
+```
+
+Delete an issue via ids on pipeline
+```
+@(1, 2, 3) | Remove-MantisIssue
+```
+
+Delete an issue via issue on pipeline
+```
+Get-MantisIssue 1 | Remove-MantisIssue
+```
+
 ## Exporting an issue as a Json file
 
 ```

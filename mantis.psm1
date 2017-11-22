@@ -230,6 +230,44 @@ function Add-MantisIssue() {
 
 <#
  .Synopsis
+  Delete an issue.
+
+ .Description
+  Delete an issue.
+
+ .Example
+  Remove-MantisIssue -id 1
+
+ .Example
+  Remove-MantisIssue 1
+
+ .Example
+  Get-MantisIssue 1 | Remove-MantisIssue
+
+ .Example
+  @(1, 2, 3) | Remove-MantisIssue
+#>
+function Remove-MantisIssue {
+  param (
+    [parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+    [int] $id
+  )
+
+  Begin {
+    $instance = getInstance
+    $headers = getCommonHeaders
+  }
+
+  Process {
+    $message = "Deleting issue " + $id
+    Write-Verbose $message
+    $uri = $instance.uri + "issues/" + $id
+    Invoke-RestMethod -Method Delete -Uri $uri -Headers $headers
+  }
+}
+
+<#
+ .Synopsis
   Get information about logged in user.
 
  .Description
@@ -318,6 +356,7 @@ function getInstance() {
 export-modulemember -function Get-MantisIssue
 export-modulemember -function New-MantisIssue
 export-modulemember -function Add-MantisIssue
+export-modulemember -function Remove-MantisIssue
 export-modulemember -function Get-MantisUser
 export-modulemember -function Get-MantisConfig
 export-modulemember -function Get-MantisVersion
