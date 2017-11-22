@@ -1,5 +1,10 @@
 # Mantis PowerShell
 
+## Works with
+
+- MantisBT: v2.8.0 or above.
+- MantisHub
+
 ## Install PowerShell Core
 
 [Install PowerShell](https://github.com/PowerShell/PowerShell)
