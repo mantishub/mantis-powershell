@@ -54,17 +54,103 @@ function New-MantisIssue() {
     [string] $description,
     [string] $project,
     [string] $category,
+    [string] $priority,
+    [string] $severity,
+    [string] $reproducibility,
+    [string] $status,
+    [string] $resolution,
+    [string] $projection,
+    [string] $eta,
+    [string] $os,
+    [string] $osBuild,
+    [string] $platform,
     [string] $reporter,
     [string] $handler,
+    [string] $version,
+    [string] $fixedInVersion,
+    [string] $targetVersion,
     [string] $additionalInformation,
     [string] $stepsToReproduce
   )
 
   $issue = @{}
-  $issue.summary = $summary;
-  $issue.description = $description;
-  $issue.project = @{ "name" = $project }
-  $issue.category = @{ "name" = $category }
+
+  if( $PSBoundParameters.ContainsKey( "summary" ) ) {
+    $issue.summary = $summary;
+  }
+
+  if( $PSBoundParameters.ContainsKey( "description" ) ) {
+    $issue.description = $description;
+  }
+
+  if( $PSBoundParameters.ContainsKey( "project" ) ) {
+    $issue.project = @{ "name" = $project }
+  }
+
+  if( $PSBoundParameters.ContainsKey( "category" ) ) {
+    $issue.category = @{ "name" = $category }
+  }
+
+  if( $PSBoundParameters.ContainsKey( "priority" ) ) {
+    $issue.priority = @{ "name" = $priority }
+  }
+
+  if( $PSBoundParameters.ContainsKey( "severity" ) ) {
+    $issue.severity = @{ "name" = $severity }
+  }
+
+  if( $PSBoundParameters.ContainsKey( "reproducibility" ) ) {
+    $issue.reproducibility = @{ "name" = $reproducibility }
+  }
+
+  if( $PSBoundParameters.ContainsKey( "status" ) ) {
+    $issue.status = @{ "name" = $status }
+  }
+
+  if( $PSBoundParameters.ContainsKey( "resolution" ) ) {
+    $issue.resolution = @{ "name" = $status }
+  }
+
+  if( $PSBoundParameters.ContainsKey( "projection" ) ) {
+    $issue.projection = @{ "name" = $projection }
+  }
+
+  if( $PSBoundParameters.ContainsKey( "eta" ) ) {
+    $issue.eta = @{ "name" = $eta }
+  }
+
+  if( $PSBoundParameters.ContainsKey( "os" ) ) {
+    $issue.os = $os
+  }
+
+  if( $PSBoundParameters.ContainsKey( "osBuild" ) ) {
+    $issue.os_build = $osBuild
+  }
+
+  if( $PSBoundParameters.ContainsKey( "platform" ) ) {
+    $issue.platform = $platform
+  }
+
+  if( $PSBoundParameters.ContainsKey( "version" ) ) {
+    $issue.version = @{ name = $version }
+  }
+
+  if( $PSBoundParameters.ContainsKey( "fixedInVersion" ) ) {
+    $issue.fixed_in_version =  @{ "name" = $fixedInVersion }
+  }
+
+  if( $PSBoundParameters.ContainsKey( "targetVersion" ) ) {
+    $issue.target_version =  @{ "name" = $targetVersion }
+  }
+
+  if( $PSBoundParameters.ContainsKey("additionalInformation") ) {
+    $issue.additional_information = $additionalInformation
+  }
+
+  if( $PSBoundParameters.ContainsKey("stepsToReproduce") ) {
+    $issue.steps_to_reproduce = $stepsToReproduce
+  }
+
   $issue.custom_fields = @()
 
   add-member -in $issue scriptmethod AddCustomField {
