@@ -28,13 +28,13 @@ param(
 
   if( $id -eq 0 ) {
     $uri = $instance.uri + "issues/"
-    $issues = Invoke-RestMethod -Uri $uri -Headers $headers
-    return $issues.issues
+    $result = Invoke-RestMethod -Uri $uri -Headers $headers
+    return $result.issues
   }
 
   $uri = $instance.uri + "issues/" + $id
-  $issues = Invoke-RestMethod -Uri $uri -Headers $headers
-  return $issues.issues[0]
+  $result = Invoke-RestMethod -Uri $uri -Headers $headers
+  return $result.issues[0]
 }
 
 <# 
