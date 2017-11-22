@@ -71,6 +71,12 @@ $issue = Get-MantisIssue 1
 $issue.history | ForEach-Object -Process { Write-Output $_ }
 ```
 
+## Exporting an issue as a Json file
+
+```
+Get-MantisIssue 1 | ConvertTo-Json -Depth 100 | Out-File issue000001.json
+```
+
 ### Getting issues
 
 ```
