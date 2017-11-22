@@ -11,7 +11,11 @@
 
 ## Import Mantis Module
 
+Load Mantis PowerShell module in an open PowerShell terminal:
+
+```
 Import-Module ./mantis.psm1
+```
 
 ## Create an API token via Mantis UI
 
