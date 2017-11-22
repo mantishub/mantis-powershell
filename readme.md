@@ -32,7 +32,7 @@ Get-MantisUser
 ## Creating an issue
 
 ```
-$issue = New-MantisIssue -summary "summmm" -description "desc" -handler "vboctor" -reporter "vboctor" -project "mantisbt" -category "ui" 
+$issue = New-MantisIssue -summary "summary" -description "desc" -handler "vboctor" -project "mantisbt" -category "ui" 
 $issue.AddCustomField( "The City", "Seattle" )
 $issue | Add-MantisIssue
 ```
@@ -41,6 +41,12 @@ $issue | Add-MantisIssue
 
 ```
 Get-MantisIssue 1
+```
+
+### Getting issues
+
+```
+Get-MantisIssue
 ```
 
 ### Getting a config option
