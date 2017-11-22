@@ -70,7 +70,8 @@ function New-MantisIssue() {
     [string] $fixedInVersion,
     [string] $targetVersion,
     [string] $additionalInformation,
-    [string] $stepsToReproduce
+    [string] $stepsToReproduce,
+    [Hashtable] $customFields
   )
 
   $issue = @{}
@@ -151,14 +152,20 @@ function New-MantisIssue() {
     $issue.steps_to_reproduce = $stepsToReproduce
   }
 
-  $issue.custom_fields = @()
+  if( $PSBoundParameters.ContainsKey("customFields") ) {
+    $issue.custom_fields = @()
+    foreach ( $current in $customFields.GetEnumerator() ) {
+      Write-Host $current
 
-  add-member -in $issue scriptmethod AddCustomField {
-      param( [string] $name, [string] $value = "auto" )
-    $custom_field = @{}
-    $custom_field.field = @{ name = $name }
-    $custom_field.value = $value
-    $issue.custom_fields += $custom_field
+      $name = $current.Name
+      $value = $current.Value
+
+      $custom_field = @{}
+      $custom_field.field = @{ name = $name }
+      $custom_field.value = $value
+
+      $issue.custom_fields += $custom_field
+    }
   }
 
   return $issue

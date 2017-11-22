@@ -53,8 +53,14 @@ Get-MantisUser
 ## Creating an issue
 
 ```
-$issue = New-MantisIssue -summary "summary" -description "desc" -handler "vboctor" -project "mantisbt" -category "ui" 
-$issue.AddCustomField( "The City", "Seattle" )
+$issue = New-MantisIssue -summary "summary" -description "desc" -handler "vboctor" -project "mantisbt" -category "ui" -version "2.8.0" -priorty "high"
+$issue | Add-MantisIssue
+```
+
+## Creating an issue with custom fields
+
+```
+$issue = New-MantisIssue -summary "summary" -description "desc" -project "mantisbt" -category "ui" -customFields @{ "The City" = "Seattle", "Root Cause" = "Code Bug" }
 $issue | Add-MantisIssue
 ```
 
