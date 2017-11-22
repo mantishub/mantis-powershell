@@ -77,16 +77,22 @@ $issue = Get-MantisIssue 1
 $issue.history | ForEach-Object -Process { Write-Output $_ }
 ```
 
+### Getting issues
+
+Get the first page of issues with default page size:
+```
+Get-MantisIssue
+```
+
+Get a specific page and page size:
+```
+Get-MantisIssue -page 5 -pageSize 50
+```
+
 ## Exporting an issue as a Json file
 
 ```
 Get-MantisIssue 1 | ConvertTo-Json -Depth 100 | Out-File issue000001.json
-```
-
-### Getting issues
-
-```
-Get-MantisIssue
 ```
 
 ### Getting a config option

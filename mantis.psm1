@@ -10,31 +10,57 @@ using namespace System.Web.Http;
  .Parameter Id
   The issue id, if it is desired to retrieve a specific issue
 
- .Example
-   # Get a paginated list of issues
-   Get-MantisIssue
+ .Parameter page
+  The page number to retrieve when retrieving multiple issues.
+
+ .Parameter page
+  The page size used for batching of issue retrieval.
 
  .Example
    # Get a specific issue
    Get-MantisIssue -Id 100
+
+ .Example
+   # Get first page of issues
+   Get-MantisIssue
+
+ .Example
+   # Get second page of issues
+   Get-MantisIssue -page 2
+
+ .Example
+   # Get second page of issues with custom page size
+   Get-MantisIssue -page 2 -pageSize 50
 #>
 function Get-MantisIssue {
 param(
-    [int] $id = 0
+    [int] $id,
+    [int] $page,
+    [int] $pageSize
   )
 
   $instance = getInstance
   $headers = getCommonHeaders
 
-  if( $id -eq 0 ) {
-    $uri = $instance.uri + "issues/"
+  # Handle getting a single issue
+  if( $PSBoundParameters.ContainsKey( "id" ) ) {
+    $uri = $instance.uri + "issues/" + $id
     $result = Invoke-RestMethod -Uri $uri -Headers $headers
-    return $result.issues
+    return $result.issues[0]
   }
 
-  $uri = $instance.uri + "issues/" + $id
+  # Handle getting a batch of issues
+  if( -not $PSBoundParameters.ContainsKey( "page" ) ) {
+    $page = 1
+  }
+
+  if( -not $PSBoundParameters.ContainsKey( "pageSize" ) ) {
+    $pageSize = 25
+  }
+
+  $uri = $instance.uri + "issues/?page=" + $page + "&page_size=" + $pageSize
   $result = Invoke-RestMethod -Uri $uri -Headers $headers
-  return $result.issues[0]
+  return $result.issues
 }
 
 <# 
