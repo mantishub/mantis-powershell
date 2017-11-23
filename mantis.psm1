@@ -31,6 +31,10 @@ using namespace System.Web.Http;
  .Example
    # Get second page of issues with custom page size
    Get-MantisIssue -page 2 -pageSize 50
+
+ .Example
+   # Get multiple issues
+   @(1, 2, 3) | Get-MantisIssue
 #>
 function Get-MantisIssue {
 param(
@@ -39,29 +43,32 @@ param(
     [int] $page,
     [int] $pageSize
   )
+  Begin {
+    $instance = getInstance
+    $headers = getCommonHeaders
+  
+    # Handle getting a batch of issues
+    if( -not $PSBoundParameters.ContainsKey( "page" ) ) {
+      $page = 1
+    }
 
-  $instance = getInstance
-  $headers = getCommonHeaders
-
-  # Handle getting a single issue
-  if( $id -ne 0 ) {
-    $uri = $instance.uri + "issues/" + $id
-    $result = Invoke-RestMethod -Uri $uri -Headers $headers
-    return $result.issues[0]
+    if( -not $PSBoundParameters.ContainsKey( "pageSize" ) ) {
+      $pageSize = 25
+    }
   }
 
-  # Handle getting a batch of issues
-  if( -not $PSBoundParameters.ContainsKey( "page" ) ) {
-    $page = 1
+  Process {
+    # Handle getting a single issue
+    if( $id -ne 0 ) {
+      $uri = $instance.uri + "issues/" + $id
+      $result = Invoke-RestMethod -Uri $uri -Headers $headers
+      Write-Output $result.issues[0]
+    } else {
+      $uri = $instance.uri + "issues/?page=" + $page + "&page_size=" + $pageSize
+      $result = Invoke-RestMethod -Uri $uri -Headers $headers
+      $result.issues | Write-Output
+    }
   }
-
-  if( -not $PSBoundParameters.ContainsKey( "pageSize" ) ) {
-    $pageSize = 25
-  }
-
-  $uri = $instance.uri + "issues/?page=" + $page + "&page_size=" + $pageSize
-  $result = Invoke-RestMethod -Uri $uri -Headers $headers
-  return $result.issues
 }
 
 <# 

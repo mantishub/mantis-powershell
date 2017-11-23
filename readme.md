@@ -98,6 +98,10 @@ Importing the file
 
     Get-MantisIssue 1
 
+## Getting multiple issues by id
+
+    @(1, 2, 3) | Get-MantisIssue
+
 ## Get issue history by id
 
     $issue = Get-MantisIssue 1
