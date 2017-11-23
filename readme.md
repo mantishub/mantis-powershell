@@ -129,7 +129,7 @@ Get-MantisIssue 1 | Remove-MantisIssue
 Get-MantisIssue 1 | ConvertTo-Json -Depth 100 | Out-File issue000001.json
 ```
 
-### Getting a config option
+## Getting config options
 
 Retrieve a single config option:
 ```
@@ -141,7 +141,24 @@ Retrieve multiple config options in one call to Mantis:
 @("status_enum_string", "priority_enum_string") | Get-MantisConfig
 ```
 
-Retrieve multiple config and dump them to an `config.json` file:
+Retrieve multiple config options and dumping them to an `config.json` file:
 ```
 @("status_enum_string", "priority_enum_string") | Get-MantisConfig | ConvertTo-Json -Depth 100 | Out-File config.json
+```
+
+## Getting localized strings
+
+Get a single string
+```
+Get-MantisString login_anonymously
+```
+
+Get multiple strings in one call to Mantis
+```
+@("login_anonymously", "anonymous") | Get-MantisString
+```
+
+Get multiple strings and dump them to a json file
+```
+@("login_anonymously", "anonymous") | Get-MantisString | ConvertTo-Json -Depth 100 | Out-File lang.json
 ```

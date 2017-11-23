@@ -413,6 +413,51 @@ param(
   }
 }
 
+<#
+ .Synopsis
+  Get localized strings in language for logged in user.
+
+ .Description
+  If multiple values are supplied via pipeline, a single
+  request will be issued to Mantis to retireve all of them.
+
+ .Example
+  # Get a single string
+  Get-MantisString login_anonymously
+
+ .Example
+  # Get multiple strings in one call to Mantis
+  @("login_anonymously", "anonymous") | Get-MantisString
+
+ .Example
+  # Get multiple strings and dump them to a json file
+  @("login_anonymously", "anonymous") | Get-MantisString | ConvertTo-Json -Depth 100 | Out-File lang.json
+#>
+function Get-MantisString {
+param(
+    [parameter(ValueFromPipeline)]
+    [string] $name
+  )
+  Begin {
+    $instance = getInstance
+    $headers = getCommonHeaders
+    $uri = $instance.uri + "lang?"
+    $count = 0
+  }
+
+  Process {
+    $uri += "string[]=" + $name + "&"
+    $count++
+  }
+
+  End {
+    if( $count -ne 0 ) {
+      $result = Invoke-RestMethod -Uri $uri -Headers $headers
+      $result.strings | Write-Output;
+    }
+  }
+}
+
 #
 # Helper Functions
 #
@@ -443,4 +488,5 @@ export-modulemember -function Edit-MantisIssue
 export-modulemember -function Remove-MantisIssue
 export-modulemember -function Get-MantisUser
 export-modulemember -function Get-MantisConfig
+export-modulemember -function Get-MantisString
 export-modulemember -function Get-MantisVersion
