@@ -3,8 +3,8 @@
 ## Works with
 
 Mantis Versions:
-- MantisBT: v2.8.0 or above.
-- MantisHub
+- [MantisBT](https://www.mantisbt.org): v2.8.0 or above.
+- [MantisHub](https://www.mantishub.com)
 
 Operating Systems (all supported by PowerShell Core):
 - Mac OS X
