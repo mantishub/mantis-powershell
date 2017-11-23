@@ -131,6 +131,12 @@ Get-MantisIssue 1 | ConvertTo-Json -Depth 100 | Out-File issue000001.json
 
 ### Getting a config option
 
+Retrieve a single config:
 ```
 Get-MantisConfig webmaster_email
+```
+
+Retrieve multiple config options in one call to Mantis:
+```
+@("status_enum_string", "priority_enum_string") | Get-MantisConfig
 ```

@@ -370,22 +370,41 @@ function Get-MantisVersion {
   Get config option value.
 
  .Description
-  Get config option value.
+  Get config option value.  If multiple values are supplied via pipeline, a single
+  request will be issued to Mantis to retireve all of them.
+
+  Note that configs of special types like enumerations (e.g. status) are returned in a
+  structured format.
 
  .Example
-   Get-MantisConfig webmaster_email
+  Get-MantisConfig webmaster_email
+
+ .Example
+  @("status_enum_string", "priority_enum_string") | Get-MantisConfig
 #>
 function Get-MantisConfig {
 param(
+    [parameter(ValueFromPipeline)]
     [string] $name
   )
+  Begin {
+    $instance = getInstance
+    $headers = getCommonHeaders
+    $uri = $instance.uri + "config?"
+    $count = 0
+  }
 
-  $instance = getInstance
-  $headers = getCommonHeaders
+  Process {
+    $uri += "option[]=" + $name + "&"
+    $count++
+  }
 
-  $uri = $instance.uri + "config?option[]=" + $name
-  $result = Invoke-RestMethod -Uri $uri -Headers $headers
-  return $result.configs[0];
+  End {
+    if( $count -ne 0 ) {
+      $result = Invoke-RestMethod -Uri $uri -Headers $headers
+      $result.configs | Write-Output;
+    }
+  }
 }
 
 #
