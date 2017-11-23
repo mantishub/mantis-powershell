@@ -81,7 +81,7 @@ Get-MantisIssue 1
 
 ```
 $issue = Get-MantisIssue 1
-$issue.history | ForEach-Object -Process { Write-Output $_ }
+$issue.history
 ```
 
 ## Getting issues
