@@ -34,6 +34,7 @@ using namespace System.Web.Http;
 #>
 function Get-MantisIssue {
 param(
+    [parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
     [int] $id,
     [int] $page,
     [int] $pageSize
@@ -43,7 +44,7 @@ param(
   $headers = getCommonHeaders
 
   # Handle getting a single issue
-  if( $PSBoundParameters.ContainsKey( "id" ) ) {
+  if( $id -ne 0 ) {
     $uri = $instance.uri + "issues/" + $id
     $result = Invoke-RestMethod -Uri $uri -Headers $headers
     return $result.issues[0]
@@ -76,6 +77,8 @@ param(
 #>
 function New-MantisIssue() {
   param (
+    [parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+    [int] $id,
     [string] $summary,
     [string] $description,
     [string] $project,
@@ -100,101 +103,116 @@ function New-MantisIssue() {
     [Hashtable] $customFields
   )
 
-  $issue = @{}
+  Process {
+    $issue = @{}
 
-  if( $PSBoundParameters.ContainsKey( "summary" ) ) {
-    $issue.summary = $summary;
-  }
-
-  if( $PSBoundParameters.ContainsKey( "description" ) ) {
-    $issue.description = $description;
-  }
-
-  if( $PSBoundParameters.ContainsKey( "project" ) ) {
-    $issue.project = @{ "name" = $project }
-  }
-
-  if( $PSBoundParameters.ContainsKey( "category" ) ) {
-    $issue.category = @{ "name" = $category }
-  }
-
-  if( $PSBoundParameters.ContainsKey( "priority" ) ) {
-    $issue.priority = @{ "name" = $priority }
-  }
-
-  if( $PSBoundParameters.ContainsKey( "severity" ) ) {
-    $issue.severity = @{ "name" = $severity }
-  }
-
-  if( $PSBoundParameters.ContainsKey( "reproducibility" ) ) {
-    $issue.reproducibility = @{ "name" = $reproducibility }
-  }
-
-  if( $PSBoundParameters.ContainsKey( "status" ) ) {
-    $issue.status = @{ "name" = $status }
-  }
-
-  if( $PSBoundParameters.ContainsKey( "resolution" ) ) {
-    $issue.resolution = @{ "name" = $status }
-  }
-
-  if( $PSBoundParameters.ContainsKey( "projection" ) ) {
-    $issue.projection = @{ "name" = $projection }
-  }
-
-  if( $PSBoundParameters.ContainsKey( "eta" ) ) {
-    $issue.eta = @{ "name" = $eta }
-  }
-
-  if( $PSBoundParameters.ContainsKey( "os" ) ) {
-    $issue.os = $os
-  }
-
-  if( $PSBoundParameters.ContainsKey( "osBuild" ) ) {
-    $issue.os_build = $osBuild
-  }
-
-  if( $PSBoundParameters.ContainsKey( "platform" ) ) {
-    $issue.platform = $platform
-  }
-
-  if( $PSBoundParameters.ContainsKey( "version" ) ) {
-    $issue.version = @{ name = $version }
-  }
-
-  if( $PSBoundParameters.ContainsKey( "fixedInVersion" ) ) {
-    $issue.fixed_in_version =  @{ "name" = $fixedInVersion }
-  }
-
-  if( $PSBoundParameters.ContainsKey( "targetVersion" ) ) {
-    $issue.target_version =  @{ "name" = $targetVersion }
-  }
-
-  if( $PSBoundParameters.ContainsKey("additionalInformation") ) {
-    $issue.additional_information = $additionalInformation
-  }
-
-  if( $PSBoundParameters.ContainsKey("stepsToReproduce") ) {
-    $issue.steps_to_reproduce = $stepsToReproduce
-  }
-
-  if( $PSBoundParameters.ContainsKey("customFields") ) {
-    $issue.custom_fields = @()
-    foreach ( $current in $customFields.GetEnumerator() ) {
-      Write-Host $current
-
-      $name = $current.Name
-      $value = $current.Value
-
-      $custom_field = @{}
-      $custom_field.field = @{ name = $name }
-      $custom_field.value = $value
-
-      $issue.custom_fields += $custom_field
+    if( $PSBoundParameters.ContainsKey( "id" ) ) {
+      $issue.id = $id;
     }
-  }
 
-  return $issue
+    if( $PSBoundParameters.ContainsKey( "summary" ) ) {
+      $issue.summary = $summary;
+    }
+
+    if( $PSBoundParameters.ContainsKey( "description" ) ) {
+      $issue.description = $description;
+    }
+
+    if( $PSBoundParameters.ContainsKey( "project" ) ) {
+      $issue.project = @{ "name" = $project }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "category" ) ) {
+      $issue.category = @{ "name" = $category }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "reporter" ) ) {
+      $issue.reporter = @{ "name" = $reporter }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "handler" ) ) {
+      $issue.handler = @{ "name" = $handler }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "priority" ) ) {
+      $issue.priority = @{ "name" = $priority }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "severity" ) ) {
+      $issue.severity = @{ "name" = $severity }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "reproducibility" ) ) {
+      $issue.reproducibility = @{ "name" = $reproducibility }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "status" ) ) {
+      $issue.status = @{ "name" = $status }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "resolution" ) ) {
+      $issue.resolution = @{ "name" = $status }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "projection" ) ) {
+      $issue.projection = @{ "name" = $projection }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "eta" ) ) {
+      $issue.eta = @{ "name" = $eta }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "os" ) ) {
+      $issue.os = $os
+    }
+
+    if( $PSBoundParameters.ContainsKey( "osBuild" ) ) {
+      $issue.os_build = $osBuild
+    }
+
+    if( $PSBoundParameters.ContainsKey( "platform" ) ) {
+      $issue.platform = $platform
+    }
+
+    if( $PSBoundParameters.ContainsKey( "version" ) ) {
+      $issue.version = @{ name = $version }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "fixedInVersion" ) ) {
+      $issue.fixed_in_version =  @{ "name" = $fixedInVersion }
+    }
+
+    if( $PSBoundParameters.ContainsKey( "targetVersion" ) ) {
+      $issue.target_version =  @{ "name" = $targetVersion }
+    }
+
+    if( $PSBoundParameters.ContainsKey("additionalInformation") ) {
+      $issue.additional_information = $additionalInformation
+    }
+
+    if( $PSBoundParameters.ContainsKey("stepsToReproduce") ) {
+      $issue.steps_to_reproduce = $stepsToReproduce
+    }
+
+    if( $PSBoundParameters.ContainsKey("customFields") ) {
+      $issue.custom_fields = @()
+      foreach ( $current in $customFields.GetEnumerator() ) {
+        Write-Host $current
+
+        $name = $current.Name
+        $value = $current.Value
+
+        $custom_field = @{}
+        $custom_field.field = @{ name = $name }
+        $custom_field.value = $value
+
+        $issue.custom_fields += $custom_field
+      }
+    }
+
+    $issue = New-Object PSObject -Property $issue
+    Write-Output $issue
+  }
 }
 
 <# 
@@ -226,6 +244,46 @@ function Add-MantisIssue() {
   $result = Invoke-RestMethod -Method Post -Uri $uri -Headers $headers -Body $body
 
   return $result.issue
+}
+
+<# 
+ .Synopsis
+  Update an issue.
+
+ .Description
+  Update an issue.
+
+ .Example
+  @(1, 5, 10) | New-MantisIssue -handler "vboctor" -status "assigned" | Edit-MantisIssue
+
+ .Example
+  # Assign issue 1 to "vboctor"
+  New-MantisIssue -id 1 -handler "vboctor" -status "assigned" | Edit-MantisIssue
+
+ .Example
+  # Batch edit multiple issues to assign to "vboctor"
+  Get-MantisIssue -page 1 -pageSize 5 | New-MantisIssue -handler "vboctor" -status "assigned" | Edit-MantisIssue
+#>
+function Edit-MantisIssue {
+  param(
+    [parameter(ValueFromPipeline)]
+    $issue,
+    [parameter(ValueFromPipelineByPropertyName)]
+    $id
+  )
+
+  Begin {
+    $instance = getInstance
+    $headers = getCommonHeaders
+    $headers["Content-Type"] = "application/json"
+  }
+
+  Process {
+    $uri = $instance.uri + "issues/" + $id
+    $body = $issue | ConvertTo-Json -Depth 100
+    $result = Invoke-RestMethod -Method Patch -Uri $uri -Headers $headers -Body $body
+    Write-Output $result.issues[0]
+  }
 }
 
 <#
@@ -356,6 +414,7 @@ function getInstance() {
 export-modulemember -function Get-MantisIssue
 export-modulemember -function New-MantisIssue
 export-modulemember -function Add-MantisIssue
+export-modulemember -function Edit-MantisIssue
 export-modulemember -function Remove-MantisIssue
 export-modulemember -function Get-MantisUser
 export-modulemember -function Get-MantisConfig

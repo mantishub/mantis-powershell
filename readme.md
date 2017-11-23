@@ -77,7 +77,7 @@ $issue = Get-MantisIssue 1
 $issue.history | ForEach-Object -Process { Write-Output $_ }
 ```
 
-### Getting issues
+## Getting issues
 
 Get the first page of issues with default page size:
 ```
@@ -89,7 +89,24 @@ Get a specific page and page size:
 Get-MantisIssue -page 5 -pageSize 50
 ```
 
-### Deleting an issue
+## Updating Issues
+
+Assign issue `1` to `vboctor`
+```
+New-MantisIssue -id 1 -handler "vboctor" -status "assigned" | Edit-MantisIssue
+```
+
+Assign a set of issues to `vboctor`
+```
+@(1, 5, 10) | New-MantisIssue -handler "vboctor" -status "assigned" | Edit-MantisIssue
+```
+
+Assign a batch of issues to `vboctor`
+```
+Get-MantisIssue -page 1 -pageSize 5 | New-MantisIssue -handler "vboctor" -status "assigned" | Edit-MantisIssue
+```
+
+## Deleting an issue
 
 Delete an issue via its id
 ```
