@@ -20,9 +20,9 @@ Operating Systems (all supported by PowerShell Core):
 - [Install PowerShell](https://github.com/PowerShell/PowerShell)
 - [Customize PowerShell Colors on Mac](https://info.sapien.com/index.php/quickguides/setting-up-powershell-on-your-mac)
 
-## Download MantisPowershell
+## Download Mantis Powershell
 
-Download [Mantis PowerShell Release](https://github.com/mantishub/mantis-powershell/releases/)
+Download and extract [Mantis PowerShell Release](https://github.com/mantishub/mantis-powershell/releases/)
 
 ## Create an API token via Mantis UI
 
