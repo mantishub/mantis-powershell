@@ -20,19 +20,15 @@ Operating Systems (all supported by PowerShell Core):
 - [Install PowerShell](https://github.com/PowerShell/PowerShell)
 - [Customize PowerShell Colors on Mac](https://info.sapien.com/index.php/quickguides/setting-up-powershell-on-your-mac)
 
+## Create an API token via Mantis UI
+
+Create API Token as per the following [article](https://support.mantishub.com/hc/en-us/articles/206640376-Using-API-Tokens-to-access-MantisHub).
+
 ## Import Mantis Module
 
 Load Mantis PowerShell module in an open PowerShell terminal:
 
     Import-Module ./mantis.psm1
-
-## Get Mantis Version
-
-    Get-MantisVersion
-
-## Create an API token via Mantis UI
-
-Create API Token as per the following [article](https://support.mantishub.com/hc/en-us/articles/206640376-Using-API-Tokens-to-access-MantisHub).
 
 ## Create Login Credentials File
 
@@ -61,6 +57,10 @@ Select the instance for all future commands:
 Note that the selected instance will be persisted on disk, hence, it will persist across PowerShell
 restarts.  This is done by copying `.mantis.company.json` to `.mantis.json`.  So if the configuration
 is changed, re-run the command `Use-MantisInstance`.
+
+## Get Mantis Version
+
+    Get-MantisVersion
 
 ## Get Logged In User Info
 
