@@ -377,10 +377,16 @@ function Get-MantisVersion {
   structured format.
 
  .Example
+  # Get a single config option
   Get-MantisConfig webmaster_email
 
  .Example
+  # Get multiple configs in one call to Mantis
   @("status_enum_string", "priority_enum_string") | Get-MantisConfig
+
+ .Example
+  # Get multiple configs and dump them to a json file
+  @("status_enum_string", "priority_enum_string") | Get-MantisConfig | ConvertTo-Json -Depth 100 | Out-File config.json
 #>
 function Get-MantisConfig {
 param(
