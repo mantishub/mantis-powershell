@@ -505,6 +505,31 @@ function Get-MantisProject {
     $result.projects | Write-Output
 }
 
+<#
+ .Synopsis
+  Select Mantis instance to connect to.
+
+ .Description
+  The name specified should match a config file at `~/.mantis.<name>.json`.
+
+ .Example
+  # Use Mantis Office Bugtracker
+  Use-MantisInstance mantisbt
+
+  # Use work bug tracker for acme
+  Use-MantisInstance acme
+#>
+function Use-MantisInstance {
+  param(
+    $instance
+  )
+
+  $source = "~/.mantis." + $instance + ".json"
+  $destination = "~/.mantis.json"
+
+  Copy-Item -Path $source -Destination $destination
+}
+
 #
 # Helper Functions
 #
@@ -538,3 +563,4 @@ export-modulemember -function Get-MantisProject
 export-modulemember -function Get-MantisConfig
 export-modulemember -function Get-MantisString
 export-modulemember -function Get-MantisVersion
+export-modulemember -function Use-MantisInstance

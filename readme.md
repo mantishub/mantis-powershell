@@ -31,14 +31,19 @@ Create API Token as per the following [article](https://support.mantishub.com/hc
 
 ## Create Login Credentials File
 
-Create `~/.mantis.json` with contents like the one below and place the token in the appropriate field:
+Create `~/.mantis.companyname.json` with contents like the one below including the appropriate URL and logical
+name for the instance.
 
 ```json
 {
-  "uri": "http://localhost/mantisbt/",
+  "uri": "https://companyname.com/mantisbt/",
   "token": "YjQlU7OI0D..........sWC1vGaAuq3Q"
 }
 ```
+
+Select the instance for all future commands:
+
+    Use-MantisInstance companyname
 
 ## Get Logged In User Info
 
