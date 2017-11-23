@@ -13,7 +13,8 @@ Operating Systems (all supported by PowerShell Core):
 
 ## Install PowerShell Core
 
-[Install PowerShell](https://github.com/PowerShell/PowerShell)
+- [Install PowerShell](https://github.com/PowerShell/PowerShell)
+- [Customize PowerShell Colors on Mac](https://info.sapien.com/index.php/quickguides/setting-up-powershell-on-your-mac)
 
 ## Import Mantis Module
 
