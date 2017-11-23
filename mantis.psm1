@@ -389,7 +389,7 @@ function Get-MantisVersion {
   @("status_enum_string", "priority_enum_string") | Get-MantisConfig | ConvertTo-Json -Depth 100 | Out-File config.json
 #>
 function Get-MantisConfig {
-param(
+  param(
     [parameter(ValueFromPipeline)]
     [string] $name
   )
@@ -434,7 +434,7 @@ param(
   @("login_anonymously", "anonymous") | Get-MantisString | ConvertTo-Json -Depth 100 | Out-File lang.json
 #>
 function Get-MantisString {
-param(
+  param(
     [parameter(ValueFromPipeline)]
     [string] $name
   )
@@ -456,6 +456,25 @@ param(
       $result.strings | Write-Output;
     }
   }
+}
+
+<#
+ .Synopsis
+  Get all projects accessible to logged in user.
+
+ .Description
+  Get all projects accessible to logged in user.
+
+ .Example
+  # Get projects accessible to logged in user
+  Get-MantisProject
+#>
+function Get-MantisProject {
+    $instance = getInstance
+    $headers = getCommonHeaders
+    $uri = $instance.uri + "projects"
+    $result = Invoke-RestMethod -Uri $uri -Headers $headers
+    $result.projects | Write-Output
 }
 
 #
@@ -487,6 +506,7 @@ export-modulemember -function Add-MantisIssue
 export-modulemember -function Edit-MantisIssue
 export-modulemember -function Remove-MantisIssue
 export-modulemember -function Get-MantisUser
+export-modulemember -function Get-MantisProject
 export-modulemember -function Get-MantisConfig
 export-modulemember -function Get-MantisString
 export-modulemember -function Get-MantisVersion

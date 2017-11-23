@@ -44,10 +44,17 @@ Create `~/.mantis.json` with contents like the one below and place the token in 
 }
 ```
 
-### Get Logged In User Info
+## Get Logged In User Info
 
 ```
 Get-MantisUser
+```
+
+## Getting Projects
+
+Get projects accessible to logged in user:
+```
+Get-MantisProject
 ```
 
 ## Creating an issue
@@ -64,7 +71,7 @@ $issue = New-MantisIssue -summary "summary" -description "desc" -project "mantis
 $issue | Add-MantisIssue
 ```
 
-### Getting an issue by Id
+## Getting an issue by Id
 
 ```
 Get-MantisIssue 1
