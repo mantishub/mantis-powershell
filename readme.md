@@ -47,7 +47,7 @@ Create `~/.mantis.json` with contents like the one below and place the token in 
 ## Get Logged In User Info
 
 ```
-Get-MantisUser
+Get-MantisUser -me
 ```
 
 ## Getting Projects

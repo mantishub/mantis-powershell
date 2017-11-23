@@ -332,9 +332,13 @@ function Remove-MantisIssue {
   Get information about logged in user.
 
  .Example
-   Get-MantisUser
+   Get-MantisUser -me
 #>
 function Get-MantisUser {
+  param(
+    [Switch]
+    $me
+  )
   $instance = getInstance
   $headers = getCommonHeaders
 
