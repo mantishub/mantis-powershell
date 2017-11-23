@@ -79,27 +79,49 @@ function New-MantisIssue() {
   param (
     [parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
     [int] $id,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $summary,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $description,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $project,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $category,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $priority,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $severity,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $reproducibility,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $status,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $resolution,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $projection,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $eta,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $os,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $osBuild,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $platform,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $reporter,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $handler,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $version,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $fixedInVersion,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $targetVersion,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $additionalInformation,
+    [parameter(ValueFromPipelineByPropertyName)]
     [string] $stepsToReproduce,
+    [parameter(ValueFromPipelineByPropertyName)]
     [Hashtable] $customFields
   )
 
@@ -234,16 +256,18 @@ function Add-MantisIssue() {
     $issue
   )
 
-  $instance = getInstance
+  Begin {
+    $instance = getInstance
+    $headers = getCommonHeaders
+    $headers["Content-Type"] = "application/json"
+    $uri = $instance.uri + "issues/"
+  }
 
-  $headers = getCommonHeaders
-  $headers["Content-Type"] = "application/json"
-
-  $uri = $instance.uri + "issues/"
-  $body = $issue | ConvertTo-Json -Depth 100
-  $result = Invoke-RestMethod -Method Post -Uri $uri -Headers $headers -Body $body
-
-  return $result.issue
+  Process {
+    $body = $issue | ConvertTo-Json -Depth 100
+    $result = Invoke-RestMethod -Method Post -Uri $uri -Headers $headers -Body $body
+    $result.issue
+  }
 }
 
 <# 

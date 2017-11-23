@@ -55,6 +55,18 @@ Get projects accessible to logged in user:
     $issue = New-MantisIssue -summary "summary" -description "desc" -handler "vboctor" -project "mantisbt" -category "ui" -version "2.8.0" -priorty "high"
     $issue | Add-MantisIssue
 
+## Importing a CSV file
+
+Sample File (`sample.csv`)
+
+    "project", "category", "summary", "description"
+    "mantisbt", "ui", "test csv 1", "test csv 1"
+    "mantisbt", "ui", "test csv 2", "test csv 2"
+
+Importing the file
+
+    Import-Csv -Path ./sample.csv | New-MantisIssue | Add-MantisIssue 
+
 ## Creating an issue with custom fields
 
     $issue = New-MantisIssue -summary "summary" -description "desc" -project "mantisbt" -category "ui" -customFields @{ "The City" = "Seattle", "Root Cause" = "Code Bug" }
