@@ -1,5 +1,9 @@
 # Mantis PowerShell
 
+## Demo
+
+[![asciicast](https://asciinema.org/a/2vOZtWFW69bvOZ82Br8AEPQqw.png)](https://asciinema.org/a/2vOZtWFW69bvOZ82Br8AEPQqw)
+
 ## Works with
 
 Mantis Versions:
