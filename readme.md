@@ -35,6 +35,7 @@ Create API Token as per the following [article](https://support.mantishub.com/hc
 Create `~/.mantis.companyname.json` with contents like the one below including the appropriate URL and logical
 name for the instance.
 
+Example for authenticated instance:
 ```json
 {
   "uri": "https://companyname.com/mantisbt/",
@@ -42,9 +43,20 @@ name for the instance.
 }
 ```
 
+Example for anonymous access
+```json
+{
+  "uri": "https://companyname.com/mantisbt/"
+}
+```
+
 Select the instance for all future commands:
 
     Use-MantisInstance companyname
+
+Note that the selected instance will be persisted on disk, hence, it will persist across PowerShell
+restarts.  This is done by copying `.mantis.company.json` to `.mantis.json`.  So if the configuration
+is changed, re-run the command `Use-MantisInstance`.
 
 ## Get Logged In User Info
 

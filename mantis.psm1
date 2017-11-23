@@ -536,8 +536,13 @@ function Use-MantisInstance {
 
 function getCommonHeaders {
   $headers = @{
-    "Authorization" = $instance.token
     "User-Agent" = "MantisPowerShell"
+  }
+
+  # Anonymous access instances won't have a token, so check before
+  # attempting to add the header.
+  if( ($instance.PSobject.Properties.name -match "token") ) {
+    $headers["Authorization"] = $instance.token
   }
 
   return $headers
